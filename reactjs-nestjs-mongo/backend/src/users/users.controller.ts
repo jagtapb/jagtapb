@@ -3,12 +3,14 @@ import { UsersService } from './users.service';
 import { User } from './interfaces/user.interface';
 import { JwtService } from '@nestjs/jwt';
 import { Request, Response } from 'express';
+import { WinstonLoggerService } from '../logger/winston-logger.service';
 
 @Controller()
 export class UsersController {
   constructor(
     private readonly usersService: UsersService,
-    private readonly jwtService: JwtService
+    private readonly jwtService: JwtService,
+    private readonly logger: WinstonLoggerService
     ) {}
 
   @Post('register')
@@ -22,21 +24,26 @@ export class UsersController {
     @Body('password') password: string,
     @Res({passthrough: true}) response: Response
     ) {
-    const user = await this.usersService.login(email, password);
-    const token = await this.jwtService.signAsync({
-      id: user._id
-    }, { expiresIn: '30s'});
-    const refreshToken = await this.jwtService.signAsync({
-      id: user._id
-    });
-
-    response.status(200);
-    response.cookie('refresh_token', refreshToken, {
-      httpOnly: true,
-      maxAge: 7 * 24 * 60 * 1000 // 1 week
-    });
-
-    return {token};
+      try {
+        const user = await this.usersService.login(email, password);
+        const token = await this.jwtService.signAsync({
+          id: user._id
+        }, { expiresIn: '30s'});
+        const refreshToken = await this.jwtService.signAsync({
+          id: user._id
+        });
+    
+        response.status(200);
+        response.cookie('refresh_token', refreshToken, {
+          httpOnly: true,
+          maxAge: 7 * 24 * 60 * 1000 // 1 week
+        });
+    
+        return {token};    
+      } catch(error) {
+        this.logger.error('An error occurred', error.stack);
+        throw new UnauthorizedException();
+      }
   }
 
   @Post('user')
@@ -45,7 +52,8 @@ export class UsersController {
       const accessToken = request.headers.authorization.replace('Bearer ', '');
       const { id } = await this.jwtService.verifyAsync(accessToken);
       return await this.usersService.findById(id);
-    } catch(e) {
+    } catch(error) {
+      this.logger.error('An error occurred', error.stack);
       throw new UnauthorizedException();
     }
   }
@@ -61,7 +69,8 @@ export class UsersController {
       const token = await this.jwtService.signAsync({id}, { expiresIn: '30s'});
       response.status(200);
       return {token};
-    } catch(e) {
+    } catch(error) {
+      this.logger.error('An error occurred', error.stack);
       new UnauthorizedException();
     }
   }

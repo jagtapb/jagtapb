@@ -4,6 +4,7 @@ import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { UserSchema } from './schemas/user.schema';
 import { JwtModule } from '@nestjs/jwt';
+import { WinstonLoggerService } from '../logger/winston-logger.service';
 
 @Module({
   imports: [
@@ -15,8 +16,12 @@ import { JwtModule } from '@nestjs/jwt';
   ],
   controllers: [UsersController],
   providers: [
-      UsersService
+      UsersService,
+      WinstonLoggerService,
     ],
-  exports: [UsersService],
+  exports: [
+    UsersService,
+    WinstonLoggerService,
+  ],
 })
 export class UsersModule {}

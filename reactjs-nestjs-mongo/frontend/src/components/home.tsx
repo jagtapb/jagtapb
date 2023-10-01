@@ -13,7 +13,7 @@ export const Home = () => {
         (async () => {
             try {
                 const {data} = await axios.post('user', {});
-                setMessage(`Hi ${data.name}, Welcome to the Home Page.`);    
+                setMessage(`Hi ${data.name}, Welcome to the application.`);    
                 dispatch(setAuth(true));
             } catch(e) {
                 setMessage('You are not Authenticated...');
