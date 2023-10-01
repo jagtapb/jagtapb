@@ -1,41 +1,45 @@
-# Authentication using NestJS, ReactJS and MongoDB
+# Authentication using NestJS, ReactJS, and MongoDB
 
-This is an application for User Authentication using JWT token.
-It has frontend as ReactJS, Backend as NestJS and DB as MongoDB.
-We are using cloud MongoDB here. I have already setup the cluster in cloud.momgodb.com
+This application provides secure User Authentication using JWT tokens, featuring a frontend built with ReactJS, a backend powered by NestJS, and MongoDB as the chosen database solution. The MongoDB database is hosted in the cloud on cloud.mongodb.com, providing scalability and accessibility.
 
-Logging is done using winston logger and all logs can be viewed in backend/logs files(not added in git ignore) so that it can be viewed.
+## Key Features
+## Frontend (ReactJS)
+    Directory: reactjs-nestjs-mongo/frontend/
+    Technology: ReactJS with TypeScript
+    Packages:
+        JWT: Used for Authentication and Authorization.
+        Redux: Facilitating state management for efficient data handling.
+        Axios: Handling API requests seamlessly.
 
-FrontEnd:-
-Directory:- reactjs-nestjs-mongo/frontend/
-Technology:- ReactJS with Typescript.
-Packages:- 
-JWT for Authentication and Authorisation
-Redux for data storing.
-Axios for API calls
-
-BackEnd:-
-Directory:- reactjs-nestjs-mongo/backend/
-Technology:- NestJS with Typescript.
-DB:- MongoDB
-Packages:- 
-Mongoose fir Mongo Connection
-JWT for verification of API
-Winston for logging
-bcryptjs for password encryption
+## Backend (NestJS)
+    Directory: reactjs-nestjs-mongo/backend/
+    Technology: NestJS with TypeScript
+    Database: MongoDB
+    Packages:
+        Mongoose: Ensuring a smooth integration with MongoDB for data storage.
+        JWT: Employed for API verification and security.
+        Winston: Comprehensive logging with logs stored in the /backend/logs directory (please note that log files are not included in the .gitignore file).
 
 ## Getting Started
+To begin working with this application, follow these steps:
 
-To get started with this project, follow these steps:
+## Frontend
+1. Navigate to the frontend directory:
+    cd reactjs-nestjs-mongo/frontend/
+2. Install dependencies:
+    npm install
+3. Start the frontend server:
+    npm run start
 
-1. Clone the repository with the command "git clone https://github.com/jagtapb/jagtapb.git".
-2. Install dependencies in ForntEnd and Backend.
-3. Run the frontend and backend application.
+The application will be accessible on port 3000. Open your browser and navigate to http://localhost:3000/login.
 
-## Usage
 
-Describe how to use your project here.
+## Backend
+1. Navigate to the backend directory:
+    cd reactjs-nestjs-mongo/backend/
+2. Install dependencies:
+    npm install
+3. Start the backend server in development mode:    
+    npm run start:dev
 
-## License
-
-This project is licensed under the Bhushan Jagtap.
+The backend server will be running on port http://localhost:8000.
